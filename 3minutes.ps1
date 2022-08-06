@@ -64,3 +64,4 @@ $voice.rate = 1
 $voice.speak("Hey, your time is up!")
 
 Write-Output 'Thanks for taking a few minutes with me'
+Start-Process "https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley"
