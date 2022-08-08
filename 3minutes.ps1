@@ -75,50 +75,47 @@ $voiceornot = $host.ui.PromptForChoice($title, $message, $options, 0)
 function Start-TextInhaleExhale {
 
 Write-Host "We're going to take a couple of nice deep breaths now `nReady?"
-    Start-Sleep 1
-    [int]$breaths = 0
+    # Start-Sleep 1
+    # [int]$breaths = 0
     
-    do {
-    $breaths = $breaths +1
-    [int]$second = 0
-        do {
-            $second = $second +1
-            Write-Host "Inhale for $second"
-            Start-Sleep 1
-        } until (
-            $second -eq 4
-        )
-        Write-Host 'Great! You are doing great!'
-        [int]$second = 0
-        do {
-            $second = $second +1
-            Write-Host "Hold it in for $second"
-            Start-Sleep 1
-            } until (
-            $second -eq 3
-        )
-        [int]$second = 0
-        do {
-            $second = $second +1
-            Write-Host "Exhale for $second"
-            Start-Sleep 1
-            } until (
-            $second -eq 4
-        )
-        if ($breaths -ne 2) {
-            Write-Host 'And again,'
-        }
-    } until (
-        $breaths -eq 2
-    )
+    # do {
+    # $breaths = $breaths +1
+    # [int]$second = 0
+    #     do {
+    #         $second = $second +1
+    #         Write-Host "Inhale for $second"
+    #         Start-Sleep 1
+    #     } until (
+    #         $second -eq 4
+    #     )
+    #     Write-Host 'Great! You are doing great!'
+    #     [int]$second = 0
+    #     do {
+    #         $second = $second +1
+    #         Write-Host "Hold it in for $second"
+    #         Start-Sleep 1
+    #         } until (
+    #         $second -eq 3
+    #     )
+    #     [int]$second = 0
+    #     do {
+    #         $second = $second +1
+    #         Write-Host "Exhale for $second"
+    #         Start-Sleep 1
+    #         } until (
+    #         $second -eq 4
+    #     )
+    #     if ($breaths -ne 2) {
+    #         Write-Host 'And again,'
+    #     }
+    # } until (
+    #     $breaths -eq 2
+    # )
 
     Write-Host "Now it is time for you to close your eyes, we have a timer `nit is set for three minutes, after this I will tell you that your time is up"
     Request-Meditation
 
 }
-
-function Request-Meditation { 
-
     function Start-SpeachMeditation {
         $voice.Speak("Great, we will get started.") | Out-Null
         Start-Sleep -Seconds 2
@@ -135,6 +132,9 @@ function Request-Meditation {
         Write-Host 'Thanks for taking a few minutes with me'
         Exit
     }
+function Request-Meditation { 
+
+
     # yes/no options for meditation
     $yes = New-Object System.Management.Automation.Host.ChoiceDescription '&Yes', 'Are you ready to take a few moments: Yes'
     $no = New-Object System.Management.Automation.Host.ChoiceDescription '&No', 'Are you ready to take a few moments: No'
@@ -146,22 +146,17 @@ function Request-Meditation {
     #querying for result
     $result = $host.ui.PromptForChoice($title, $message, $options, 0)
 
-    #this bit is broken
-    if ($voiceornot -eq 1) {
-        Write-Host "Great, we will get started."
-        Start-Sleep -Seconds 2
-        
-        # Notifying the time is up
-        $voice = New-Object -ComObject Sapi.spvoice
-        $voice.rate = 0.5
-        write-Host "Hey, your time is up!"
-        write-Host "Thanks for taking a few minutes with me"
-        Exit
-    }
-    else {
-        switch ($result) {
-            0 {Start-SpeachMeditation}
-            1 {Deny-Meditation}
-            }
-    }
+
+}
+if (($voiceornot -eq 0) -and ($result -eq 0)){
+    Write-Host 'running voice meditation'
+}
+elseif (($voiceornot -eq 0) -and ($result -eq 1)) {
+    Write-Host 'not running meditation'
+}
+elseif (($voiceornot -eq 1) -and ($result -eq 0)) {
+Write-Host 'running text meditation with notification that time is up'
+}
+elseif (($voiceornot -eq 1) -and ($result -eq 1)) {
+Write-Host 'not doing a fucking thing.'
 }
